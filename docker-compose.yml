@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+#  Liquibase:
+#    # Image to be pulled from Docker Hub
+#    image: liquibase/liquibase:4.9.1
+#    # Name of the container
+#    container_name: Liquibase_container
+#    # Setting depends_on to PostgreSQL container to wait till the service is ready to accept connections
+#    depends_on:
+#      - PostgreSQL
+#    # Volume to add the liquibase collection of scripts
+#    volumes:
+#      - ./sql/liquibase/changelog/:/liquibase/changelog/
+#      #- ./sql/liquibase/liquibase_policy_init.sh:/liquibase/liquibase_policy_init.sh
+#      #- ./sql/liquibase/nc.sh:/liquibase/nc.sh
+#      #- ./sql/liquibase/wait_for_port.sh:/liquibase/wait_for_port.sh
+#    #entrypoint: ./wait_for_port.sh
+#    command: [
+#        '-c',
+#        './liquibase_policy_init.sh',
+#        'postgresql', '5432'
+#    ]
+#    # Command to run the liquibase update service
+#    #command: --defaults-file=/liquibase/changelog/liquibase.properties update
+
+  PostgreSQL:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=questionmarks
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./sql/v0001.sql:/docker-entrypoint-initdb.d/
+volumes:
+  db:
+    driver: local
