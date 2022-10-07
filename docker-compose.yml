@@ -27,13 +27,10 @@ services:
     image: postgres:14.1-alpine
     restart: always
     environment:
-      - POSTGRES_DB=questionmarks
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=questionmarks
     ports:
       - '5432:5432'
     volumes:
-      - ./sql/v0001.sql:/docker-entrypoint-initdb.d/
-volumes:
-  db:
-    driver: local
+      - ./database/sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
